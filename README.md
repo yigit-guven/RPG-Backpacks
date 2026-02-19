@@ -1,8 +1,8 @@
 # RPG Backpacks
 
-[![CurseForge](http://cf.way2muchnoise.eu/full_rpg-backpacks_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/rpg-backpacks)
+[![CurseForge Downloads](https://img.shields.io/curseforge/dt/478335?logo=curseforge&logoColor=orange&label=Curseforge&color=orange)](https://www.curseforge.com/minecraft/mc-mods/rpg-backpacks)
 [![Modrinth](https://img.shields.io/modrinth/dt/rpg-backpacks?label=Modrinth&style=flat-square&logo=modrinth)](https://modrinth.com/mod/rpg-backpacks)
-[![Discord](https://img.shields.io/discord/1234567890?color=5865F2&label=Discord&logo=discord&style=flat-square)](https://discord.gg/gNajXYku5z)
+[![Discord](https://img.shields.io/discord/1440563800930652235?logo=discord&logoColor=blue&label=Discord&color=blue&link=https%3A%2F%2Fdiscord.gg%2FgNajXYku5z)](https://discord.gg/gNajXYku5z)
 [![License](https://img.shields.io/github/license/yigit-guven/RPG-Backpacks?style=flat-square)](LICENSE)
 
 **RPG Backpacks** adds wearable backpacks with different storage capacities to your Minecraft adventures. Carry more items, organize your inventory, and look stylish while exploring the world!

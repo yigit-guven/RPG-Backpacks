@@ -1,0 +1,12 @@
+{
+  "item.rpgbackpacks.leather_backpack": "Leather Backpack",
+  "item.rpgbackpacks.iron_backpack": "Iron Backpack",
+  "item.rpgbackpacks.golden_backpack": "Golden Backpack",
+  "item.rpgbackpacks.diamond_backpack": "Diamond Backpack",
+  "item.rpgbackpacks.netherite_backpack": "Netherite Backpack",
+  "item.rpgbackpacks.backpack.slots": "%s Slots",
+  "itemGroup.rpgbackpacks": "RPG Backpacks",
+  "itemGroup.rpgbackpacks.backpacks_tab": "RPG Backpacks",
+  "key.rpgbackpacks.open_backpack": "Open Backpack",
+  "key.categories.rpgbackpacks": "RPG Backpacks"
+}

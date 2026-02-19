@@ -1,0 +1,21 @@
+{
+    "type": "rpgbackpacks:backpack_upgrade",
+    "category": "misc",
+    "key": {
+        "B": {
+            "item": "rpgbackpacks:iron_backpack"
+        },
+        "G": {
+            "item": "minecraft:gold_ingot"
+        }
+    },
+    "pattern": [
+        "GGG",
+        "GBG",
+        "GGG"
+    ],
+    "result": {
+        "count": 1,
+        "id": "rpgbackpacks:golden_backpack"
+    }
+}

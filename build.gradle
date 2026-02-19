@@ -1,0 +1,86 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.72'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = '6.0.0'
+group = 'com.yigitguven.rpgbackpacks'
+
+repositories {
+    mavenLocal()
+    maven {
+        url = "https://maven.neoforged.net/releases/"
+    }
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
+}
+
+dependencies {
+    compileOnly "top.theillusivec4.curios:curios-neoforge:9.4.0+1.21.1:api" // Version for 1.21.1
+    // runtimeOnly "top.theillusivec4.curios:curios-neoforge:10.0.0+1.21.1" // Optional runtime
+}
+
+base {
+    archivesName = 'rpgbackpacks'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+neoForge {
+    version = '21.1.1' // NeoForge 1.21.1 version
+
+    mods {
+        rpgbackpacks {
+            sourceSet sourceSets.main
+        }
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'rpgbackpacks'
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'rpgbackpacks'
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', 'rpgbackpacks', '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+    }
+}
+
+processResources {
+    var replaceProperties = [
+            minecraft_version      : '1.21.1',
+            minecraft_version_range: '[1.21.1, 1.22)',
+            neo_version            : '21.1.1',
+            neo_version_range      : '[21.1.1,)',
+            loader_version_range   : '[1,)',
+            mod_id                 : 'rpgbackpacks',
+            mod_name               : 'RPG Backpacks',
+            mod_license            : 'GPL-3.0',
+            mod_version            : '6.0.0',
+            mod_authors            : 'Yigit Guven',
+            mod_description        : 'Adds wearable backpacks with different storage capacities for carrying more items.'
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand replaceProperties
+    }
+}

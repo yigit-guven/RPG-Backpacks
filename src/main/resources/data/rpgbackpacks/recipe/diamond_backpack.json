@@ -1,0 +1,21 @@
+{
+    "type": "rpgbackpacks:backpack_upgrade",
+    "category": "misc",
+    "key": {
+        "B": {
+            "item": "rpgbackpacks:golden_backpack"
+        },
+        "D": {
+            "item": "minecraft:diamond"
+        }
+    },
+    "pattern": [
+        "DDD",
+        "DBD",
+        "DDD"
+    ],
+    "result": {
+        "count": 1,
+        "id": "rpgbackpacks:diamond_backpack"
+    }
+}

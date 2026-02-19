@@ -1,0 +1,21 @@
+{
+    "type": "rpgbackpacks:backpack_upgrade",
+    "category": "misc",
+    "key": {
+        "B": {
+            "item": "rpgbackpacks:leather_backpack"
+        },
+        "I": {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "pattern": [
+        "III",
+        "IBI",
+        "III"
+    ],
+    "result": {
+        "count": 1,
+        "id": "rpgbackpacks:iron_backpack"
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "size": 1,
+  "operation": "SET",
+  "use_native_gui": true,
+  "validators": [
+    "curios:tag"
+  ]
+}

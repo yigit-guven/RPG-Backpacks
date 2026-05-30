@@ -2,7 +2,11 @@ package com.yigitguven.rpgbackpacks.client;
 
 import com.yigitguven.rpgbackpacks.RpgBackpacks;
 import com.yigitguven.rpgbackpacks.client.model.BackpackModel;
+import com.yigitguven.rpgbackpacks.client.renderer.BackpackWearLayer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,6 +21,17 @@ public class ClientSetup {
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(BACKPACK_LAYER, BackpackModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
+        var entityModels = Minecraft.getInstance().getEntityModels();
+        for (PlayerSkin.Model skin : event.getSkins()) {
+            var renderer = event.getSkin(skin);
+            if (renderer instanceof PlayerRenderer playerRenderer) {
+                playerRenderer.addLayer(new BackpackWearLayer(playerRenderer, entityModels));
+            }
+        }
     }
 
     @SubscribeEvent

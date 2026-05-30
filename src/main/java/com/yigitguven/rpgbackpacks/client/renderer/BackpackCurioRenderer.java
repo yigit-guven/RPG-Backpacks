@@ -20,10 +20,6 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class BackpackCurioRenderer implements ICurioRenderer {
     private BackpackModel<LivingEntity> model;
-    private static final ResourceLocation TEXTURE = ResourceLocation
-            .withDefaultNamespace("textures/models/armor/iron_layer_1.png");
-    // using iron armor texture for now as placeholder, ideally use
-    // "rpgbackpacks:textures/models/armor/backpack.png"
 
     @Override
     public <T extends LivingEntity, M extends net.minecraft.client.model.EntityModel<T>> void render(ItemStack stack,
@@ -40,8 +36,15 @@ public class BackpackCurioRenderer implements ICurioRenderer {
         this.model.prepareMobModel(slotContext.entity(), limbSwing, limbSwingAmount, partialTicks);
         ICurioRenderer.followBodyRotations(slotContext.entity(), this.model);
 
+        ResourceLocation texture = getBackpackTexture(stack);
+
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer,
-                RenderType.armorCutoutNoCull(TEXTURE), stack.hasFoil());
-        this.model.renderToBuffer(matrixStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+                RenderType.armorCutoutNoCull(texture), stack.hasFoil());
+        this.model.renderBackpack(matrixStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+    }
+
+    private static ResourceLocation getBackpackTexture(ItemStack stack) {
+        ResourceLocation itemId = ResourceLocation.parse(stack.getItemHolder().getRegisteredName());
+        return ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "textures/item/" + itemId.getPath() + ".png");
     }
 }

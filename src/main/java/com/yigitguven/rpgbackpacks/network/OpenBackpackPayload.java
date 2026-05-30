@@ -59,7 +59,7 @@ public record OpenBackpackPayload() implements CustomPacketPayload {
                 final int finalSourceId = sourceId;
 
                 player.openMenu(new net.minecraft.world.SimpleMenuProvider(
-                        (id, inv, p) -> new com.yigitguven.rpgbackpacks.menu.BackpackMenu(id, inv, finalStack),
+                        (id, inv, p) -> new com.yigitguven.rpgbackpacks.menu.BackpackMenu(id, inv, finalStack, finalSourceId),
                         finalStack.getHoverName()), buffer -> {
                             buffer.writeInt(finalSourceId);
                         });

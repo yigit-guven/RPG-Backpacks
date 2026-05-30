@@ -21,15 +21,15 @@ public class BackpackMenu extends AbstractContainerMenu {
     private final SimpleContainer backpackContainer;
     private final ItemStack backpackStack;
     private final Player player;
+    private final int sourceId;
     public final int rows; // Exposed for Screen
 
     // Constructor for Client Side
     public BackpackMenu(int containerId, Inventory playerInventory, FriendlyByteBuf extraData) {
-        this(containerId, playerInventory, findBackpack(playerInventory.player, extraData));
+        this(containerId, playerInventory, findBackpack(playerInventory.player, extraData.readInt()));
     }
 
-    private static ItemStack findBackpack(Player player, FriendlyByteBuf extraData) {
-        int source = extraData.readInt();
+    private static ItemStack findBackpack(Player player, int source) {
         if (source == 0)
             return player.getMainHandItem();
         if (source == 1)
@@ -43,9 +43,14 @@ public class BackpackMenu extends AbstractContainerMenu {
 
     // Constructor for Server Side
     public BackpackMenu(int containerId, Inventory playerInventory, ItemStack backpackStack) {
+        this(containerId, playerInventory, backpackStack, detectSource(playerInventory.player, backpackStack));
+    }
+
+    public BackpackMenu(int containerId, Inventory playerInventory, ItemStack backpackStack, int sourceId) {
         super(ModMenus.BACKPACK_MENU.get(), containerId);
         this.player = playerInventory.player;
         this.backpackStack = backpackStack;
+        this.sourceId = sourceId;
 
         // Determine rows from item
         if (backpackStack.getItem() instanceof com.yigitguven.rpgbackpacks.item.BackpackItem backpackItem) {
@@ -153,6 +158,39 @@ public class BackpackMenu extends AbstractContainerMenu {
                 items.add(container.getItem(i));
             }
             backpackStack.set(ModDataComponents.BACKPACK_CONTENTS.get(), ItemContainerContents.fromItems(items));
+            this.syncBackpackToSource();
+        }
+    }
+
+    private static int detectSource(Player player, ItemStack stack) {
+        if (stack.isEmpty()) {
+            return -1;
+        }
+
+        if (ItemStack.isSameItemSameComponents(player.getMainHandItem(), stack)) {
+            return 0;
+        }
+        if (ItemStack.isSameItemSameComponents(player.getOffhandItem(), stack)) {
+            return 1;
+        }
+        if (ItemStack.isSameItemSameComponents(player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST), stack)) {
+            return 2;
+        }
+        if (!com.yigitguven.rpgbackpacks.compat.CuriosCompat.findBackpack(player).isEmpty()) {
+            return 3;
+        }
+
+        return -1;
+    }
+
+    private void syncBackpackToSource() {
+        switch (this.sourceId) {
+            case 0 -> this.player.getInventory().setItem(this.player.getInventory().selected, this.backpackStack.copy());
+            case 1 -> this.player.getInventory().offhand.set(0, this.backpackStack.copy());
+            case 2 -> this.player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST, this.backpackStack.copy());
+            case 3 -> com.yigitguven.rpgbackpacks.compat.CuriosCompat.updateBackpack(this.player, this.backpackStack);
+            default -> {
+            }
         }
     }
 }

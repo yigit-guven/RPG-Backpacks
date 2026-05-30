@@ -10,12 +10,30 @@ import top.theillusivec4.curios.api.SlotResult;
 import java.util.Optional;
 
 public class CuriosCompat {
-    public static ItemStack findBackpack(Player player) {
-        if (!ModList.get().isLoaded("curios"))
-            return ItemStack.EMPTY;
+    public static Optional<SlotResult> findBackpackResult(Player player) {
+        if (!ModList.get().isLoaded("curios")) {
+            return Optional.empty();
+        }
 
-        Optional<SlotResult> result = CuriosApi.getCuriosHelper().findFirstCurio(player,
+        return CuriosApi.getCuriosHelper().findFirstCurio(player,
                 stack -> stack.getItem() instanceof com.yigitguven.rpgbackpacks.item.BackpackItem);
-        return result.map(SlotResult::stack).orElse(ItemStack.EMPTY);
+    }
+
+    public static ItemStack findBackpack(Player player) {
+        return findBackpackResult(player).map(SlotResult::stack).orElse(ItemStack.EMPTY);
+    }
+
+    public static void updateBackpack(Player player, ItemStack updatedStack) {
+        if (!ModList.get().isLoaded("curios") || updatedStack.isEmpty()) {
+            return;
+        }
+
+        findBackpackResult(player).ifPresent(result -> CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> {
+            var stacksHandler = handler.getCurios().get(result.slotContext().identifier());
+            if (stacksHandler == null) {
+                return;
+            }
+            stacksHandler.getStacks().setStackInSlot(result.slotContext().index(), updatedStack.copy());
+        }));
     }
 }

@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
     compileOnly "top.theillusivec4.curios:curios-neoforge:9.4.0+1.21.1:api" // Version for 1.21.1
-    // runtimeOnly "top.theillusivec4.curios:curios-neoforge:10.0.0+1.21.1" // Optional runtime
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:9.4.0+1.21.1"
 }
 
 base {
@@ -37,7 +37,7 @@ java {
 }
 
 neoForge {
-    version = '21.1.1' // NeoForge 1.21.1 version
+    version = '21.1.60' // NeoForge 1.21.1 version
 
     mods {
         rpgbackpacks {
@@ -68,8 +68,8 @@ processResources {
     var replaceProperties = [
             minecraft_version      : '1.21.1',
             minecraft_version_range: '[1.21.1, 1.22)',
-            neo_version            : '21.1.1',
-            neo_version_range      : '[21.1.1,)',
+            neo_version            : '21.1.60',
+            neo_version_range      : '[21.1.60,)',
             loader_version_range   : '[1,)',
             mod_id                 : 'rpgbackpacks',
             mod_name               : 'RPG Backpacks',

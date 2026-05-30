@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rpgbackpacks:leather_backpack",
+    "rpgbackpacks:iron_backpack",
+    "rpgbackpacks:golden_backpack",
+    "rpgbackpacks:diamond_backpack",
+    "rpgbackpacks:netherite_backpack"
+  ]
+}

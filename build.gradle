@@ -29,7 +29,11 @@ dependencies {
 }
 
 base {
-    archivesName = 'rpgbackpacks'
+    archivesName = 'rpg_backpacks'
+}
+
+tasks.named('jar', Jar).configure {
+    archiveFileName = "rpg_backpacks-${project.version}-neoforge-1.21.1.jar"
 }
 
 java {

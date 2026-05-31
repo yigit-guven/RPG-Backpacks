@@ -2,10 +2,10 @@ package com.yigitguven.rpgbackpacks.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import com.yigitguven.rpgbackpacks.client.ClientSetup;
-import com.yigitguven.rpgbackpacks.client.model.BackpackModel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -19,7 +19,7 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class BackpackCurioRenderer implements ICurioRenderer {
-    private BackpackModel<LivingEntity> model;
+    private com.yigitguven.rpgbackpacks.client.model.BackpackCustomModel<LivingEntity> model;
 
     @Override
     public <T extends LivingEntity, M extends net.minecraft.client.model.EntityModel<T>> void render(ItemStack stack,
@@ -28,19 +28,26 @@ public class BackpackCurioRenderer implements ICurioRenderer {
             float ageInTicks, float netHeadYaw, float headPitch) {
         if (this.model == null) {
             EntityModelSet models = Minecraft.getInstance().getEntityModels();
-            this.model = new BackpackModel<>(models.bakeLayer(ClientSetup.BACKPACK_LAYER));
+            this.model = new com.yigitguven.rpgbackpacks.client.model.BackpackCustomModel<>(models.bakeLayer(ClientSetup.BACKPACK_LAYER));
         }
 
         // Sync model with entity
         this.model.setupAnim(slotContext.entity(), limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        this.model.prepareMobModel(slotContext.entity(), limbSwing, limbSwingAmount, partialTicks);
-        ICurioRenderer.followBodyRotations(slotContext.entity(), this.model);
 
         ResourceLocation texture = getBackpackTexture(stack);
 
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer,
-                RenderType.armorCutoutNoCull(texture), stack.hasFoil());
+            RenderType.armorCutoutNoCull(texture), stack.hasFoil());
+
+        matrixStack.pushPose();
+        if (slotContext.entity().isCrouching()) {
+            if (renderLayerParent.getModel() instanceof HumanoidModel<?> humanoidModel) {
+                matrixStack.mulPose(Axis.XP.rotation(humanoidModel.body.xRot));
+            }
+            matrixStack.translate(0.0D, 0.05D, -0.14D);
+        }
         this.model.renderBackpack(matrixStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
+        matrixStack.popPose();
     }
 
     private static ResourceLocation getBackpackTexture(ItemStack stack) {

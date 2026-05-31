@@ -2,8 +2,8 @@ package com.yigitguven.rpgbackpacks.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import com.yigitguven.rpgbackpacks.client.ClientSetup;
-import com.yigitguven.rpgbackpacks.client.model.BackpackModel;
 import com.yigitguven.rpgbackpacks.item.BackpackItem;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -18,12 +18,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 public class BackpackWearLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    private final BackpackModel<AbstractClientPlayer> backpackModel;
+    private final com.yigitguven.rpgbackpacks.client.model.BackpackCustomModel<AbstractClientPlayer> backpackModel;
 
     public BackpackWearLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer,
             net.minecraft.client.model.geom.EntityModelSet entityModels) {
         super(renderer);
-        this.backpackModel = new BackpackModel<>(entityModels.bakeLayer(ClientSetup.BACKPACK_LAYER));
+        this.backpackModel = new com.yigitguven.rpgbackpacks.client.model.BackpackCustomModel<>(entityModels.bakeLayer(ClientSetup.BACKPACK_LAYER));
     }
 
     @Override
@@ -42,8 +42,15 @@ public class BackpackWearLayer extends RenderLayer<AbstractClientPlayer, PlayerM
 
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer,
             RenderType.armorCutoutNoCull(texture), chestStack.hasFoil());
+
+        poseStack.pushPose();
+        if (player.isCrouching()) {
+            poseStack.mulPose(Axis.XP.rotation(this.getParentModel().body.xRot));
+            poseStack.translate(0.0D, 0.05D, -0.14D);
+        }
         this.backpackModel.renderBackpack(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY,
             0xFFFFFFFF);
+        poseStack.popPose();
     }
 
         private static ResourceLocation getBackpackTexture(ItemStack stack) {

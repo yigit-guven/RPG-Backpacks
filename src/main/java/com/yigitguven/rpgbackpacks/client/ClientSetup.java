@@ -20,7 +20,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(BACKPACK_LAYER, BackpackModel::createBodyLayer);
+        event.registerLayerDefinition(BACKPACK_LAYER, com.yigitguven.rpgbackpacks.client.model.BackpackCustomModel::createBodyLayer);
     }
 
     @SubscribeEvent

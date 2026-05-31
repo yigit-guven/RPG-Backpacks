@@ -44,7 +44,7 @@ public class BackpackCurioRenderer implements ICurioRenderer {
             if (renderLayerParent.getModel() instanceof HumanoidModel<?> humanoidModel) {
                 matrixStack.mulPose(Axis.XP.rotation(humanoidModel.body.xRot));
             }
-            matrixStack.translate(0.0D, 0.09D, -0.14D);
+            matrixStack.translate(0.0D, 0.13D, -0.14D);
         }
         this.model.renderBackpack(matrixStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
         matrixStack.popPose();

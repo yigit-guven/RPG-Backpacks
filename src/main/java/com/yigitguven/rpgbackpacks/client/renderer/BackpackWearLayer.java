@@ -46,7 +46,7 @@ public class BackpackWearLayer extends RenderLayer<AbstractClientPlayer, PlayerM
         poseStack.pushPose();
         if (player.isCrouching()) {
             poseStack.mulPose(Axis.XP.rotation(this.getParentModel().body.xRot));
-            poseStack.translate(0.0D, 0.09D, -0.14D);
+            poseStack.translate(0.0D, 0.13D, -0.14D);
         }
         this.backpackModel.renderBackpack(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY,
             0xFFFFFFFF);

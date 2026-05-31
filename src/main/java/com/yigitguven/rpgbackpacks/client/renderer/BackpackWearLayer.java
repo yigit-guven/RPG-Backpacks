@@ -53,8 +53,8 @@ public class BackpackWearLayer extends RenderLayer<AbstractClientPlayer, PlayerM
         poseStack.popPose();
     }
 
-        private static ResourceLocation getBackpackTexture(ItemStack stack) {
-            ResourceLocation itemId = ResourceLocation.parse(stack.getItemHolder().getRegisteredName());
+    private static ResourceLocation getBackpackTexture(ItemStack stack) {
+        ResourceLocation itemId = ResourceLocation.parse(stack.getItemHolder().getRegisteredName());
         return ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "textures/item/" + itemId.getPath() + ".png");
-        }
+    }
 }

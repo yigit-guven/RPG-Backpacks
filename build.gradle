@@ -10,7 +10,7 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = '6.0.0'
+version = '6.0.1'
 group = 'com.yigitguven.rpgbackpacks'
 
 repositories {
@@ -74,7 +74,7 @@ processResources {
             mod_id                 : 'rpgbackpacks',
             mod_name               : 'RPG Backpacks',
             mod_license            : 'GPL-3.0',
-            mod_version            : '6.0.0',
+            mod_version            : '6.0.1',
             mod_authors            : 'Yigit Guven',
             mod_description        : 'Adds wearable backpacks with different storage capacities for carrying more items.'
     ]
